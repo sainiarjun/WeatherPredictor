@@ -4,3 +4,4 @@ torch
 pandas
 meteostat
 torch-optimizer
+streamlit
