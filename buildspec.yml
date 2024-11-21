@@ -14,3 +14,4 @@ phases:
 artifacts:
   files:
     - model_scripted.pt  # The packaged model file to be uploaded
+    - app.py
