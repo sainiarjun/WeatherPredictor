@@ -6,6 +6,8 @@ from sklearn.preprocessing import QuantileTransformer
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
+
+
 # Set page title and layout
 st.set_page_config(page_title="Weather Prediction App", layout="wide")
 
