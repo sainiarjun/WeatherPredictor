@@ -5,7 +5,10 @@ import pandas as pd
 from sklearn.preprocessing import QuantileTransformer
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
+import os
 
+port = int(os.environ.get("PORT", 8501))
+os.system(f"streamlit run app.py --server.port {port} --server.address 0.0.0.0")
 
 
 # Set page title and layout
