@@ -4,10 +4,8 @@ import pandas as pd
 from sklearn.preprocessing import * 
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
-
 # date_input = input("Please enter a date (YYYY-MM-DD): ")
 date_input='2024-11-1'
-
 try:
     date_object = datetime.strptime(date_input, "%Y-%m-%d")
 except ValueError:
