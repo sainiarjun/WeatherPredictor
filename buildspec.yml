@@ -11,7 +11,10 @@ phases:
       - echo "Training the weather prediction model"
       - python train.py  # This is your script for training the LSTM model
       - echo "Model trained successfully"
+      - docker build -t streamlit-app .
+      - $(aws ecr get-login-password --region us-east-1) | docker login --username AWS --password-stdin 367499066414.dkr.ecr.us-east-1.amazonaws.com
+      - docker tag streamlit-app:latest 367499066414.dkr.ecr.us-east-1.amazonaws.com/streamlit-app:latest
+      - docker push 367499066414.dkr.ecr.us-east-1.amazonaws.com/streamlit-app:latest
 artifacts:
   files:
     - model_scripted.pt  # The packaged model file to be uploaded
-    - app.py
