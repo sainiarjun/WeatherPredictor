@@ -17,7 +17,7 @@ phases:
       - echo "Checking for train.py"
       - ls -l train.py
       - echo "Checking for Dockerfile"
-      - ls -l Dockerfile
+      - ls -l dockerfile
 
   build:
     commands:
