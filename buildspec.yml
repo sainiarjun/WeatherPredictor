@@ -21,14 +21,18 @@ phases:
 
   build:
     commands:
+      - set -x  # Enable command tracing
       - echo "Training the weather prediction model"
       - python train.py  # Your script for training the LSTM model
       - echo "Model trained successfully"
-      - docker build -t streamlit-app .
+      - echo "Building Docker image"
+      - docker build -t streamlit-app . || { echo "Docker build failed"; exit 1; }
       - echo "Logging into ECR"
       - $(aws ecr get-login-password --region us-east-1) | docker login --username AWS --password-stdin 367499066414.dkr.ecr.us-east-1.amazonaws.com || { echo "Docker login failed"; exit 1; }
+      - echo "Tagging Docker image"
       - docker tag streamlit-app:latest 367499066414.dkr.ecr.us-east-1.amazonaws.com/streamlit-app:latest
-      - docker push 367499066414.dkr.ecr.us-east-1.amazonaws.com/streamlit-app:latest
+      - echo "Pushing Docker image to ECR"
+      - docker push 367499066414.dkr.ecr.us-east-1.amazonaws.com/streamlit-app:latest || { echo "Docker push failed"; exit 1; }
 
 artifacts:
   files:
