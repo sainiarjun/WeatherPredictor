@@ -1,5 +1,5 @@
 # Use an official Python image
-FROM python:3.11-slim
+FROM public.ecr.aws/docker/library/python:slim-bullseye 
 
 # Set working directory
 WORKDIR /app
