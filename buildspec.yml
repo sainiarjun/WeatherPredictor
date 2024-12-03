@@ -28,7 +28,7 @@ phases:
       - echo "Building Docker image"
       - docker build -t streamlit-app . || { echo "Docker build failed"; exit 1; }
       - echo "Logging into ECR"
-      - $(aws ecr get-login-password --region us-east-1) | docker login --username AWS --password-stdin 367499066414.dkr.ecr.us-east-1.amazonaws.com || { echo "Docker login failed"; exit 1; }
+      - $(aws ecr get-login-password --region us-east-1) | docker login --username AWS --password-stdin 367499066414.dkr.ecr.us-east-1.amazonaws.com
       - echo "Tagging Docker image"
       - docker tag streamlit-app:latest 367499066414.dkr.ecr.us-east-1.amazonaws.com/streamlit-app:latest
       - echo "Pushing Docker image to ECR"
