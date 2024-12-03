@@ -32,7 +32,7 @@ phases:
       - echo "Tagging Docker image"
       - docker tag streamlit-app:latest 367499066414.dkr.ecr.us-east-1.amazonaws.com/weather_predictor:latest
       - echo "Pushing Docker image to ECR"
-      - docker push 367499066414.dkr.ecr.us-east-1.amazonaws.com/streamlit-app:latest || { echo "Docker push failed"; exit 1; }
+      - docker push 367499066414.dkr.ecr.us-east-1.amazonaws.com/weather_predictor:latest || { echo "Docker push failed"; exit 1; }
 
 artifacts:
   files:
