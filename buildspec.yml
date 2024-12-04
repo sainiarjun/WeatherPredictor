@@ -30,7 +30,7 @@ phases:
       - echo "Logging into ECR"
       - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/h0w6o2c0
       - echo "Tagging Docker image"
-      - docker tag weatherpredictor:latest public.ecr.aws/h0w6o2c0/weather_predictor:latest
+      - docker tag weather_predictor:latest public.ecr.aws/h0w6o2c0/weather_predictor:latest
       - echo "Pushing Docker image to ECR"
       - docker push public.ecr.aws/h0w6o2c0/weather_predictor:latest
 
