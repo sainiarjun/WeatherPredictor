@@ -33,7 +33,7 @@ phases:
       - echo "Login successful"
       - echo "Tagging Docker image"
       # - docker tag weatherpredictor:latest public.ecr.aws/h0w6o2c0/weatherpredictor:latest
-      - docker tag weather_predictor:latest 367499066414.dkr.ecr.us-east-1.amazonaws.com/weather_predictor:latest
+      - docker tag weatherpredictor:latest 367499066414.dkr.ecr.us-east-1.amazonaws.com/weather_predictor:latest
       - echo "Pushing the Docker image to Amazon ECR Public..."
       # - docker push public.ecr.aws/h0w6o2c0/weatherpredictor:latest
       - docker push 367499066414.dkr.ecr.us-east-1.amazonaws.com/weather_predictor:latest
