@@ -5,3 +5,4 @@ pandas
 meteostat
 torch-optimizer
 streamlit
+python-dateutil
