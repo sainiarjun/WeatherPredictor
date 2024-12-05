@@ -5,9 +5,7 @@ FROM public.ecr.aws/docker/library/python:slim-bullseye
 WORKDIR /app
 
 # Copy app and model
-COPY app.py /app/
-COPY requirements.txt /app/
-COPY model_scripted.pt /app/
+COPY . /app
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
