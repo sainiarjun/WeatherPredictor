@@ -1,29 +1,20 @@
-import streamlit as st
-from meteostat import Point, Daily
+from flask import Flask, render_template_string, request
 import torch
 import pandas as pd
+from meteostat import Point, Daily
 from sklearn.preprocessing import QuantileTransformer
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
-import os
 
-port = int(os.environ.get("PORT", 8501))
-# Set page title and layout
-st.set_page_config(page_title="Weather Prediction App", layout="wide")
-
-# Title of the app
-st.title("Weather Prediction App")
-
-# Input date (Allow user input)
-date_input = st.date_input("Please enter a date", datetime.today())
+# Initialize the Flask app
+app = Flask(__name__)
 
 # Function to fetch weather data and make predictions
 def fetch_weather_predictions(date_input):
     try:
-        date_object = datetime.strptime(str(date_input), "%Y-%m-%d")
+        date_object = datetime.strptime(date_input, "%Y-%m-%d")
     except ValueError:
-        st.error("Invalid date format. Please use YYYY-MM-DD.")
-        return
+        return {"error": "Invalid date format. Please use YYYY-MM-DD."}
     
     previous_day = date_object - timedelta(days=1)
     date_one_month_ago = date_object - relativedelta(months=1)
@@ -60,7 +51,7 @@ def fetch_weather_predictions(date_input):
     with torch.no_grad():
         predictions = model(input_data_scaled)
     predictions_rescaled = predictions.cpu().numpy()
-    predictions_rescaled = scaler.inverse_transform(predictions.cpu().numpy().reshape(-1, input_data.shape[1]))
+    predictions_rescaled = scaler.inverse_transform(predictions_rescaled.reshape(-1, input_data.shape[1]))
 
     result = dict(zip(input_data.columns, predictions_rescaled[0]))
     legend = {
@@ -75,12 +66,40 @@ def fetch_weather_predictions(date_input):
 
     return result, legend
 
-# Fetch and display results when the user selects a date
-if st.button("Get Predictions"):
+# Define routes
+@app.route('/')
+def index():
+    return render_template_string('''
+        <!DOCTYPE html>
+        <html>
+        <head><title>Weather Prediction App</title></head>
+        <body>
+            <h1>Weather Prediction App</h1>
+            <form method="post" action="/predict">
+                <label for="date">Enter a Date (YYYY-MM-DD):</label>
+                <input type="date" id="date" name="date" required>
+                <button type="submit">Get Predictions</button>
+            </form>
+        </body>
+        </html>
+    ''')
+
+@app.route('/predict', methods=['POST'])
+def predict():
+    date_input = request.form.get('date')
+    if not date_input:
+        return "Please provide a valid date."
+    
     result, legend = fetch_weather_predictions(date_input)
-    
-    # Display the results
-    st.subheader(f"Weather Predictions for {date_input}")
-    
+    if "error" in result:
+        return result["error"]
+
+    predictions_html = '<h2>Weather Predictions</h2>'
     for key, value in result.items():
-        st.write(f"{legend[key]}: {value:.2f}")
+        predictions_html += f'<p>{legend[key]}: {value:.2f}</p>'
+
+    return predictions_html
+
+# Start the Flask app
+if __name__ == '__main__':
+    app.run(debug=True, port=8501)

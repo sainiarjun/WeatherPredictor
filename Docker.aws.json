@@ -1,0 +1,13 @@
+{
+    "AWSEBDockerrunVersion": "2",
+    "Image": {
+      "Name": "public.ecr.aws/h0w6o2c0/weatherpredictor:latest",
+      "Update": "true"
+    },
+    "Ports": [
+      {
+        "ContainerPort": "8501"
+      }
+    ]
+  }
+  
