@@ -1,15 +1,15 @@
-[server]
-headless = true
-port = 8501
-enableCORS = false
-enableXsrfProtection = false
-enableWebsocketCompression = false
-staticUrlPath = "/static"
-maxUploadSize = 1000
-baseUrlPath = "/"
+#[server]
+##headless = true
+#port = 8501
+#enableCORS = true
+#enableXsrfProtection = true
+#enableWebsocketCompression = false
+#staticUrlPath = "/static"
+#maxUploadSize = 1000
+#baseUrlPath = "/"
 
-# Set the address that Streamlit binds to for listening to incoming requests
-address = "0.0.0.0"
+## Set the address that Streamlit binds to for listening to incoming requests
+#address = "0.0.0.0"
 
-[logger]
-level = "debug"  # You can change it to "debug" if you need more verbose logs
+#[logger]
+#level = "debug"  # You can change it to "debug" if you need more verbose logs
