@@ -26,18 +26,14 @@ phases:
       - python train.py  # Your script for training the LSTM model
       - echo "Model trained successfully"
       - echo "Building Docker image"
-      - docker build -t weather_predictor:latest .
-      #- docker build -t weatherpredictor:latest .
+      - docker build -t weatherpredictor:latest .
       - echo "Logging in to Amazon ECR Public..."
-      # - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/h0w6o2c0
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 367499066414.dkr.ecr.us-east-1.amazonaws.com
+      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/h0w6o2c0
       - echo "Login successful"
       - echo "Tagging Docker image"
-      # - docker tag weatherpredictor:latest public.ecr.aws/h0w6o2c0/weatherpredictor:latest
-      - docker tag weather_predictor:latest 367499066414.dkr.ecr.us-east-1.amazonaws.com/weather_predictor:latest
+      - docker tag weatherpredictor:latest public.ecr.aws/h0w6o2c0/weatherpredictor:latest
       - echo "Pushing the Docker image to Amazon ECR Public..."
-      # - docker push public.ecr.aws/h0w6o2c0/weatherpredictor:latest
-      - docker push 367499066414.dkr.ecr.us-east-1.amazonaws.com/weather_predictor:latest
+      - docker push public.ecr.aws/h0w6o2c0/weatherpredictor:latest
       - echo "Docker image pushed successfully"
 
 artifacts:
