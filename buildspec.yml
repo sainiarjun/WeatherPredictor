@@ -40,7 +40,7 @@ phases:
         --instance-ids "i-06b79a4f1acd940c1" \
         --document-name "AWS-RunShellScript" \
         --comment "Running deploy.sh on EC2 instance" \
-        --parameters 'commands=["sudo ~/deploy.sh"]'
+        --parameters "commands=['sudo /home/ec2-user/deploy.sh']"
 
 artifacts:
   files:
