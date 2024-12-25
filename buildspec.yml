@@ -3,38 +3,22 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Installing dependencies"
       - pip install --upgrade pip
       - pip install -r requirements.txt
-      - echo "Checking Python version"
       - python --version
-      - echo "Checking pip version"
       - pip --version
-      - echo "Listing installed packages"
       - pip list
-      - echo "Listing files"
       - ls -l
-      - echo "Checking for train.py"
       - ls -l train.py
-      - echo "Checking for Dockerfile"
       - ls -l dockerfile
 
   build:
     commands:
       - set -x  # Enable command tracing
-      - echo "Training the weather prediction model"
       - python train.py  # Your script for training the LSTM model
-      - echo "Model trained successfully"
-      - echo "Building Docker image"
       - docker build -t weatherpredictor:latest .
-      - echo "Logging in to Amazon ECR Public..."
       - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/h0w6o2c0
-      - echo "Login successful"
-      - echo "Tagging Docker image"
       - docker tag weatherpredictor:latest public.ecr.aws/h0w6o2c0/weatherpredictor:latest
-      - echo "Pushing the Docker image to Amazon ECR Public..."
       - docker push public.ecr.aws/h0w6o2c0/weatherpredictor:latest
-      - echo "Docker image pushed successfully"
-      - echo "Triggering deploy script on EC2 via SSM"
       - aws ssm send-command --instance-ids "i-06b79a4f1acd940c1" --document-name "AWS-RunShellScript" --comment "Running deploy.sh on EC2 instance" --parameters '{"commands":["sudo /home/ec2-user/deploy.sh"]}'
 
